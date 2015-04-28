@@ -1,6 +1,6 @@
 <html>
     <head>
-        <title>{% block title %}Padrão se ninguém chamar essa porra{% endblock %}</title>
+        <title>{% block title %}Don't Forget{% endblock %}</title>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="" />
         <meta name="keywords" content="" />
@@ -18,30 +18,42 @@
         </noscript>
         <!--[if lte IE 8]><link rel="stylesheet" href="css/ie/v8.css" /><![endif]-->
     </head>
+
     <body id="top">
 
-    <!-- Header -->
-    <header id="header">
-        <a href="#" class="image avatar"><img src="/static/images/avatar.jpg" alt="" /></a>
-        <h1>
-            <strong>
-                Bem vindo:
-            </strong>
-            XPTO
-            <br>
-            <strong>
-                <!--a href="http://html5up.net">sair.</a-->
-                <a href="logout.html">sair</a>
+        <!-- Header -->
+        <header id="header">
+            <a href="#" class="image avatar"><img src="/static/images/avatar.jpg" alt="" /></a>
+            <h1>
+                <strong>
+                    Bem vindo:
+                </strong>
+                XPTO
                 <br>
-                <a href="contatos.html">contatos</a>
-                <br>
-                <a href="eventos.html">eventos</a>
-            </strong>
-        </h1>
-    </header>
+                <strong>
+                    <!--a href="http://html5up.net">sair.</a-->
+                    <a href="/logout/">sair</a>
+                    <br>
+                    <a href="/contatos/">contatos</a>
+                    <br>
+                    <a href="/estabelecimentos/">estabelecimentser os</a>
+                    <br>
+                    <a href="/eventos/">eventos</a>
+                </strong>
+            </h1>
+        </header>
+
+        <div id="main">
+            <section id="one">
+                <header class="major">
+                    <h2>{% block bodyTitle %} {% endblock %}</h2>
+                </header>
+                <p>{% block bodyDescription %} {% endblock %}</p>
+            </section>
 
 
-        {% block body %}{% endblock %}
+            {% block body %}{% endblock %}
+        </div>
 
         <!-- Footer -->
         <footer id="footer">

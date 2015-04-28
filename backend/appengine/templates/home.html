@@ -1,85 +1,74 @@
 {% extends '/base/base.html' %}
 {% block title %}
-    Agenda - Contatos
+    Don't Forget - Contatos
 {% endblock %}
-
+{% block bodyTitle %}Página principal!{% endblock %}
+{% block bodyDescription %}Cadastre os seus afazeres e seja lembrado através do seu smartphone.{% endblock %}
 {% block body %}
 
-    <!-- Main -->
-    <div id="main">
-
-        <!-- One -->
-        <section id="one">
-            <header class="major">
-                <h2>Agenda Eletrônica - Don't Forget!</h2>
-            </header>
-            <p>Cadastre os seus afaseres e seja lembrado através do seu smartphone.</p>
-        </section>
-
-        <!-- Two -->
-        <section id="two">
-            <h2>Novo compromisso</h2>
-            <p>Digite abaixo seu novo compromisso.</p>
-            <div class="row">
-                <div class="12u 12u$(small)">
-                    <form method="post" action="#">
-                        <div class="row uniform 50%">
-                            <div class="6u$">
-                                Data<input type="date" name="date" id="date"/>
-                            </div>
-                            <div class="6u$">
-                                <input type="text" name="titulo" id="titulo" placeholder="Titulo" />
-                            </div>
-                            <div class="12u$">
-                                <textarea name="descricao" id="descricao" placeholder="Descricao" rows="4"></textarea>
-                            </div>
+    <!-- Two -->
+    <section id="two">
+        <h2>Novo compromisso</h2>
+        <p>Digite abaixo seu novo compromisso.</p>
+        <div class="row">
+            <div class="12u 12u$(small)">
+                <form method="post" action="#">
+                    <div class="row uniform 50%">
+                        <div class="6u$">
+                            Data<input type="date" name="date" id="date"/>
                         </div>
-                    </form>
-                    <ul class="actions">
-                        <li>
-                            <input type="submit" value="Salvar Compromisso" />
-                        </li>
-                    </ul>
-                </div>
+                        <div class="6u$">
+                            <input type="text" name="titulo" id="titulo" placeholder="Titulo" />
+                        </div>
+                        <div class="12u$">
+                            <textarea name="descricao" id="descricao" placeholder="Descricao" rows="4"></textarea>
+                        </div>
+                    </div>
+                </form>
+                <ul class="actions">
+                    <li>
+                        <input type="submit" value="Salvar Compromisso" />
+                    </li>
+                </ul>
             </div>
-        </section>
-        <!-- Three -->
-        <section id="three">
-            <h2>Compromissos Agendados</h2>
-            <div class="row">
-                <article class="6u 12u$(xsmall) work-item">
-                    <strong>Data:</strong> 11/03/2015;
-                    <br>
-                    <strong>Titulo:</strong> Aula de Script;
-                    <br>
-                    <strong>Descrição:</strong> Primeira página da aula;
-                    <br>
-                    <strong>Lembretes:</strong>
-                    <ul>
-                        <li>2 dias antes;</li>
-                        <li>1 dia antes;</li>
-                        <li>12 horas antes;</li>
-                        <li>6 horas antes;</li>
-                        <li>2 horas antes;</li>
-                        <li>30 minutos antes;</li>
-                    </ul>
-                    <a href="#">Adicionar horário</a>
-                </article>
-                <article class="6u 12u$(xsmall) work-item">
-                    <strong>Data:</strong> 21/03/2015;
-                    <br>
-                    <strong>Titulo:</strong> Dentista;
-                    <br>
-                    <strong>Descrição:</strong> Foo Bar;
-                    <br>
-                    <strong>Lembretes:</strong>
-                    <ul>
-                        <li>1 dia antes;</li>
-                        <li>12 horas antes;</li>
-                    </ul>
-                    <a href="#">Adicionar horário</a>
-                </article>
-            </div>
-        </section>
-    </div>
+        </div>
+    </section>
+    <!-- Three -->
+    <section id="three">
+        <h2>Compromissos Agendados</h2>
+        <div class="row">
+            <article class="6u 12u$(xsmall) work-item">
+                <strong>Data:</strong> 11/03/2015;
+                <br>
+                <strong>Titulo:</strong> Aula de Script;
+                <br>
+                <strong>Descrição:</strong> Primeira página da aula;
+                <br>
+                <strong>Lembretes:</strong>
+                <ul>
+                    <li>2 dias antes;</li>
+                    <li>1 dia antes;</li>
+                    <li>12 horas antes;</li>
+                    <li>6 horas antes;</li>
+                    <li>2 horas antes;</li>
+                    <li>30 minutos antes;</li>
+                </ul>
+                <a href="#">Adicionar horário</a>
+            </article>
+            <article class="6u 12u$(xsmall) work-item">
+                <strong>Data:</strong> 21/03/2015;
+                <br>
+                <strong>Titulo:</strong> Dentista;
+                <br>
+                <strong>Descrição:</strong> Foo Bar;
+                <br>
+                <strong>Lembretes:</strong>
+                <ul>
+                    <li>1 dia antes;</li>
+                    <li>12 horas antes;</li>
+                </ul>
+                <a href="#">Adicionar horário</a>
+            </article>
+        </div>
+    </section>
 {% endblock %}
