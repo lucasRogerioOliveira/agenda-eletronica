@@ -5,56 +5,37 @@
 {% block bodyTitle %}Contatos{% endblock %}
 {% block bodyDescription %}Insira contatos para facilitar na hora de agendar seus compromissos.{% endblock %}
 {% block body %}
-
     <!-- Two -->
     <section id="two">
         <h2>Contatos</h2>
         <table>
+            <thead>
+                <tr>
+                    <th>Id</th>
+                    <th>Nome</th>
+                    <th class="icon fa-envelope-o"> Email</th>
+                    <th class="icon fa-mobile"> Celular</th>
+                    <th class="icon fa-home">Endereço</th>
+                    <!--th class="icon fa-map-marker"> Mapa</th-->
+                    <th>Editar</th>
+                    <th>Excluir</th>
+                </tr>
+            </thead>
+            {% for contato in contatos %}
             <tr>
-                <td>Nome</td>
-                <td class="icon fa-envelope-o"> Email</td>
-                <td class="icon fa-mobile"> Celular</td>
-                <td class="icon fa-home">Endereço</td>
-                <td class="icon fa-map-marker"> Mapa</td>
-                <td>Editar</td>
-                <td>Excluir</td>
+                <td>{{ contato.id }}</td>
+                <td>{{ contato.nome }}</td>
+                <td>{{ contato.email }}</td>
+                <td>{{ contato.celular }}</td>
+                <td>{{ contato.logradouro }}</td>
+                <td><a href="{{ contato.edit_path }}" class="icon fa-edit"></a></td>
+                <td><a href="{{ contato.remove_path }}" class="icon fa-remove"></a></td>
             </tr>
-            <tr>
-                <td>Lucas</td>
-                <td>lucasoliveiracampos@gmail.com</td>
-                <td>(XX)91111-2222</td>
-                <td>Rua dos bobos Nº: 0</td>
-                <td><a href="#"><h3 class="icon fa-map-marker"></h3></td>
-                <td><a href="/contatos/editar.html"><h3 class="icon fa-edit"></h3></a></td>
-                <td><a href="#"><h3 class="icon fa-remove"></h3></a></td>
-            </tr>
-            <tr>
-                <td>Lucas</td>
-                <td>lucasoliveiracampos@gmail.com</td>
-                <td>(XX)91111-2222</td>
-                <td>Rua dos bobos Nº: 0</td>
-                <td><a href="#"><h3 class="icon fa-map-marker"></h3></td>
-                <td><a href="/contatos/editar.html"><h3 class="icon fa-edit"></h3></a></td>
-                <td><a href="#"><h3 class="icon fa-remove"></h3></a></td>
-            </tr>
-            <tr>
-                <td>Lucas</td>
-                <td>lucasoliveiracampos@gmail.com</td>
-                <td>(XX)91111-2222</td>
-                <td>Rua dos bobos Nº: 0</td>
-                <td><a href="#"><h3 class="icon fa-map-marker"></h3></td>
-                <td><a href="/contatos/editar.html"><h3 class="icon fa-edit"></h3></a></td>
-                <td><a href="#"><h3 class="icon fa-remove"></h3></a></td>
-            </tr>
-            <tr>
-                <td>Lucas</td>
-                <td>lucasoliveiracampos@gmail.com</td>
-                <td>(XX)91111-2222</td>
-                <td>Rua dos bobos Nº: 0</td>
-                <td><a href="#"><h3 class="icon fa-map-marker"></h3></td>
-                <td><a href="contatos/editar.html"><h3 class="icon fa-edit"></h3></a></td>
-                <td><a href="#"><h3 class="icon fa-remove"></h3></a></td>
-            </tr>
+            {% endfor %}
         </table>
+        <form action="{{ new_path }}" method="post" role="form">
+            <button type="submit" class="btn-success">Novo</button>
+        </form>
     </section>
+
 {% endblock %}

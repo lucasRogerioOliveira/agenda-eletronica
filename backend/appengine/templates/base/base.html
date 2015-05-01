@@ -1,3 +1,15 @@
+{% macro csrf_input() %}
+    <input type="hidden" value="{{ _csrf_code }}" name="_csrf_code"/>
+{% endmacro %}
+{% macro form_input(label,property,value,error_msg) %}
+    <div class="form-group {{ ' has-error' if error_msg }}">
+        <label for="{{ property }}Input"
+               class="control-label">{{ label }} </label>
+        <input id="{{ property }}Input" type="text" class="form-control" name="{{ property }}"
+               value="{{ value }}"/>
+        {% if error_msg %}<span class="help-block">{{ error_msg }}</span>{% endif %}
+    </div>
+{% endmacro %}
 <html>
     <head>
         <title>{% block title %}Don't Forget{% endblock %}</title>
@@ -58,9 +70,10 @@
         <!-- Footer -->
         <footer id="footer">
             <ul class="icons">
-                {% for link in links %}
-                    <li><a href="#" class="icon {{link.icon}}">{{link.name}}</a></li>
-                {% endfor %}
+                <li><a href="#" class="icon fa-twitter">Twitter</a></li>
+                <li><a href="#" class="icon fa-github">Github</a></li>
+                <li><a href="#" class="icon fa-dribbble">Dribbble</a></li>
+                <li><a href="#" class="icon fa-envelope-o">Email</a></li>
             </ul>
             <ul class="copyright">
                 <li>&copy; Untitled</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
