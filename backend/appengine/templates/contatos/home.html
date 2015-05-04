@@ -7,7 +7,6 @@
 {% block body %}
     <!-- Two -->
     <section id="two">
-        <h2>Contatos</h2>
         <table>
             <thead>
                 <tr>
@@ -29,12 +28,18 @@
                 <td>{{ contato.celular }}</td>
                 <td>{{ contato.logradouro }}</td>
                 <td><a href="{{ contato.edit_path }}" class="icon fa-edit"></a></td>
-                <td><a href="{{ contato.remove_path }}" class="icon fa-remove"></a></td>
+                <td>
+                    <form action="{{ contato.delete_path }}" method="post">
+                        {{ csrf_input() }}
+                        <button class="button"><i class="icon fa-trash"> Excluir</i></button>
+                    </form>
+                </td>
             </tr>
             {% endfor %}
         </table>
         <form action="{{ new_path }}" method="post" role="form">
-            <button type="submit" class="btn-success">Novo</button>
+            {{ csrf_input() }}
+            <button type="submit" class="button"><i class="icon fa-archive"> Novo</i></button>
         </form>
     </section>
 

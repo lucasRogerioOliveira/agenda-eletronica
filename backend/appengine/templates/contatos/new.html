@@ -12,14 +12,14 @@
         <form action="{{ salvar_path }}" method="post" role="form">
             #parece que ele não está entendendo essa porra toda aqui embaixo:
             {{ csrf_input() }}
-            {{ form_input( 'Nome', 'nome', '', erros.nome) }}
-            {{ form_input( 'Email', 'email', '', erros.email) }}
-            {{ form_input( 'Celular', 'celular', '', erros.celular) }}
-            {{ form_input( 'Bairro', 'bairro', '', erros.bairro) }}
-            {{ form_input( 'Logradouro', 'logradouro', '', erros.logradouro) }}
-            {{ form_input( 'Numero', 'numero', '', erros.numero) }}
-            {{ form_input( 'Cep', 'cep', '', erros.cep) }}
-            <button type="submit" class="btn-success">Salvar</button>
+            {{ form_input( 'Nome', 'nome', contato.nome, erros.nome) }}
+            {{ form_input( 'Email', 'email', contato.email, erros.email) }}
+            {{ form_input( 'Celular', 'celular', contato.celular, erros.celular) }}
+            {{ form_input( 'Bairro', 'bairro', contato.bairro, erros.bairro) }}
+            {{ form_input( 'Logradouro', 'logradouro', contato.logradouro, erros.logradouro) }}
+            {{ form_input( 'Numero', 'numero', contato.numero, erros.numero) }}
+            {{ form_input( 'Cep', 'cep', contato.cep, erros.cep) }}
+            <button type="submit" class="button btn-success">Salvar</button>
         </form>
     </section>
 {% endblock %}
