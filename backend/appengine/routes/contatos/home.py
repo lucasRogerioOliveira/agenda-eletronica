@@ -6,18 +6,23 @@ from gaebusiness.business import Command, CommandParallel, CommandExecutionExcep
 from gaebusiness.gaeutil import SaveCommand
 from gaecookie.decorator import no_csrf
 from gaeforms.ndb.form import ModelForm
+from gaegraph.business_base import DeleteNode, DeleteArcs, DestinationsSearch
 from gaegraph.model import Arc, to_node_key
 from gaepermission.decorator import login_not_required
 from model.contato.contato import Contato
 from tekton import router
 from tekton.gae.middleware.redirect import RedirectResponse
 
-
-@login_not_required
+#@login_not_required
 @no_csrf
-def index():
-    query = Contato.query().order(-Contato.nome)
-    contatos = query.fetch()
+def index(_logged_user):
+    chave_do_usuario = _logged_user.key
+    query = ContatosUser.query(ContatosUser.origin == chave_do_usuario)
+    user_arcos = query.fetch()
+    chaves_de_contatos = [arco.destination for arco in user_arcos]
+    contatos = ndb.get_multi(chaves_de_contatos)
+    #buscar_contato_do_usuario_cmd = BuscarContatosDoUsuario(_logged_user)
+    #contatos = buscar_contato_do_usuario_cmd()
     form = ContatoFormTable()
     editar_form_path = router.to_path(editar_form)
     delete_path = router.to_path(delete)
@@ -34,6 +39,7 @@ def index():
 
 def delete(contato_id):
     apagar_cmd = ApagarContato(contato_id)
+    #apagar_cmd = DeleteNode(contato_id)
     apagar_contatos_user_cmd = ApagarContatosUser(contato_id)
     comandos_paralelos = CommandParallel(apagar_cmd, apagar_contatos_user_cmd)
     comandos_paralelos()
@@ -106,6 +112,11 @@ def save(_logged_user,  **propriedades):
         return TemplateResponse(contexto, '/contatos/new.html')
 
 
+#class BuscarContatosDoUsuario(DestinationsSearch):
+#    def __init__(self, user):
+#        super(BuscarContatosDoUsuario, self).__init__(ContatosUser)
+
+
 class SalvarContatoComUsuario(CommandSequential):
     def __init__(self, user, **propriedades_do_contato):
         salvar_contato_cmd = SalvarContato(**propriedades_do_contato)
@@ -130,6 +141,7 @@ class SalvarUsuarioDoContato(Command):
     def handle_previous(self, command):
         self.contato = command.result
 
+
 class ApagarContato(Command):
     def __init__(self, contato_id):
         super(ApagarContato, self).__init__()
@@ -141,6 +153,12 @@ class ApagarContato(Command):
 
     def do_business(self):
         self.futuro.get_result()
+
+
+#class ApagarContatosUser(DeleteArcs):
+#    def __init__(self, contato):
+#        super(ApagarContatosUser, self).__init__(ContatosUser, destination=contato)
+
 
 
 class ApagarContatosUser(Command):
