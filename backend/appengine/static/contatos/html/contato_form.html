@@ -20,6 +20,6 @@
             <input id="logradouroInput" ng-model="logradouro.email" type="text" class="form-control" name="logradouro" value="{[ contato.logradouro ]}"/>
             <span class="help-block" ng-if="error_msg">erros.logradouro</span>
         </div>
-        <button type="submit" class="button" ng-click="salvar()" ng-hide="salvandoFlag">Salvar</button>
+        <button class="button" ng-click="salvar()" ng-hide="salvandoFlag">Salvar</button>
         <img src="/static/img/ajax.gif" ng-show="salvandoFlag"/>
 </div>
