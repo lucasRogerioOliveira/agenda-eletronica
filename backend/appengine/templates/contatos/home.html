@@ -1,4 +1,12 @@
 {% extends '/base/base.html' %}
+{% block js %}
+    <script type="text/javascript" src="/static/contatos/js/factories.js"></script>
+    <script type="text/javascript" src="/static/contatos/js/directives.js"></script>
+    <script type="text/javascript" src="/static/contatos/js/controllers.js"></script>
+    <script>
+        var contatos = {{contatos | safe}};
+    </script>
+{% endblock %}
 {% block title %}
     Don't Forget - Contatos
 {% endblock %}
@@ -7,40 +15,35 @@
 {% block body %}
     <!-- Two -->
     <section id="two">
-        <table>
-            <thead>
-                <tr>
-                    <th>Id</th>
-                    <th>Nome</th>
-                    <th class="icon fa-envelope-o"> Email</th>
-                    <th class="icon fa-mobile"> Celular</th>
-                    <th class="icon fa-home">Endereço</th>
-                    <!--th class="icon fa-map-marker"> Mapa</th-->
-                    <th>Editar</th>
-                    <th>Excluir</th>
+        <div ng-app="contatoApp" ng-controller="ContatoController">
+            <button class="button" ng-click="mostrarOuEsconderForm()">Criar novo contato</button>
+            <contato-form ng-show="mostrarFormFlag"  index="index" contato="contato" contatos="contatos"></contato-form>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Nome</th>
+                        <th class="icon fa-envelope-o"> Email</th>
+                        <th class="icon fa-mobile"> Celular</th>
+                        <th class="icon fa-home">Endereço</th>
+                        <!--th class="icon fa-map-marker"> Mapa</th-->
+                        <th>Editar</th>
+                        <th>Excluir</th>
+                    </tr>
+                </thead>
+                {# {% for contato in contatos %} #}
+                <tr ng-repeat="contato in contatos track by $index">
+                    <td>{[ contato.id ]}</td>
+                    <td>{[ contato.nome ]}</td>
+                    <td>{[ contato.email ]}</td>
+                    <td>{[ contato.celular ]}</td>
+                    <td>{[ contato.logradouro ]}</td>
+                    <td><a href="#form-contato" id="{[contato.id]}" ng-click="editar(contato.id, $index)" class="icon fa-edit"></a></td>
+                    <td><a href="#" id="{[contato.id]}" ng-click="deletar(contato.id, $index)" class="icon fa-trash"></a></td>
+                    </td>
                 </tr>
-            </thead>
-            {% for contato in contatos %}
-            <tr>
-                <td>{{ contato.id }}</td>
-                <td>{{ contato.nome }}</td>
-                <td>{{ contato.email }}</td>
-                <td>{{ contato.celular }}</td>
-                <td>{{ contato.logradouro }}</td>
-                <td><a href="{{ contato.edit_path }}" class="icon fa-edit"></a></td>
-                <td>
-                    <form action="{{ contato.delete_path }}" method="post">
-                        {{ csrf_input() }}
-                        <button class="button"><i class="icon fa-trash"> Excluir</i></button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </table>
-        <form action="{{ new_path }}" method="post" role="form">
-            {{ csrf_input() }}
-            <button type="submit" class="button"><i class="icon fa-archive"> Novo</i></button>
-        </form>
+            </table>
+        </div>
     </section>
 
 {% endblock %}

@@ -14,6 +14,10 @@ class Contato(ndb.Model):
     numero = ndb.StringProperty(required=False)
     cep = ndb.StringProperty(required=False)
 
+    def to_dict(self, include=None, exclude=None):
+        dic = super(Contato, self).to_dict(include=include, exclude=exclude)
+        dic["id"] = self.key.id()
+        return dic
 
     @classmethod
     def query_ordenada_por_nome(cls):

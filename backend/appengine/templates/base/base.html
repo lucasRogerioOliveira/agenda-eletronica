@@ -2,13 +2,7 @@
     <input type="hidden" value="{{ _csrf_code }}" name="_csrf_code"/>
 {% endmacro %}
 {% macro form_input(label,property,value,error_msg) %}
-    <div class="form-group {{ ' has-error' if error_msg }}">
-        <label for="{{ property }}Input"
-               class="control-label">{{ label }} </label>
-        <input id="{{ property }}Input" type="text" class="form-control" name="{{ property }}"
-               value="{{ value }}"/>
-        {% if error_msg %}<span class="help-block">{{ error_msg }}</span>{% endif %}
-    </div>
+
 {% endmacro %}
 <html>
     <head>
@@ -21,6 +15,7 @@
         <script src="/static/js/jquery.poptrox.min.js"></script>
         <script src="/static/js/skel.min.js"></script>
         <script src="/static/js/init.js"></script>
+        <script type="text/javascript" src="/static/angular/js/angular.min.js"></script>
         {% block js %}{% endblock %}
         <noscript>
             <link rel="stylesheet" href="/static/css/skel.css" />

@@ -1,0 +1,25 @@
+<div id="form-contato">
+    <h2>Novo contato</h2>
+        <div class="form-group">
+            <label for="nome" class="control-label">Nome</label>
+            <input id="nameInput" ng-model="contato.nome" type="text" class="form-control" name="nome" value="{[ contato.nome ]}"/>
+            <span class="help-block" style="color: red" ng-show="errosFlag">{{result.erros.nome}}</span>
+        </div>
+        <div class="form-group">
+            <label for="email" class="control-label">Email</label>
+            <input id="emailInput" ng-model="contato.email" type="text" class="form-control" name="email" value="{[ contato.email ]}"/>
+            <span class="help-block" ng-if="error_msg">erros.email</span>
+        </div>
+        <div class="form-group">
+            <label for="celular" class="control-label">Celular</label>
+            <input id="celularInput" ng-model="contato.celular" type="text" class="form-control" name="celular" value="{[ contato.celular ]}"/>
+            <span class="help-block" ng-if="error_msg">erros.celular</span>
+        </div>
+        <div class="form-group">
+            <label for="logradouro" class="control-label">Logradouro</label>
+            <input id="logradouroInput" ng-model="logradouro.email" type="text" class="form-control" name="logradouro" value="{[ contato.logradouro ]}"/>
+            <span class="help-block" ng-if="error_msg">erros.logradouro</span>
+        </div>
+        <button type="submit" class="button" ng-click="salvar()" ng-hide="salvandoFlag">Salvar</button>
+        <img src="/static/img/ajax.gif" ng-show="salvandoFlag"/>
+</div>

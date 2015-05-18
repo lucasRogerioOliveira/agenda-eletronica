@@ -6,16 +6,14 @@ from gaebusiness.business import Command, CommandParallel, CommandExecutionExcep
 from gaebusiness.gaeutil import SaveCommand
 from gaecookie.decorator import no_csrf
 from gaeforms.ndb.form import ModelForm
-from gaegraph.business_base import DeleteNode, DeleteArcs, DestinationsSearch
 from gaegraph.model import Arc, to_node_key
-from gaepermission.decorator import login_not_required
 from model.contato.contato import Contato
 from tekton import router
-from tekton.gae.middleware.redirect import RedirectResponse
+import json
 
 #@login_not_required
 @no_csrf
-def index(_logged_user):
+def index(_logged_user, _resp):
     chave_do_usuario = _logged_user.key
     query = ContatosUser.query(ContatosUser.origin == chave_do_usuario)
     user_arcos = query.fetch()
@@ -31,19 +29,18 @@ def index(_logged_user):
         contato['edit_path'] = '%s/%s' % (editar_form_path, contato['id'])
         contato['delete_path'] = '%s/%s' % (delete_path, contato['id'])
     contexto = {
-        'contatos': contatos,
+        'contatos': json.dumps(contatos),
         'new_path': router.to_path(new)
     }
     return TemplateResponse(contexto)
 
 
-def delete(contato_id):
+def delete( contato_id):
     apagar_cmd = ApagarContato(contato_id)
     #apagar_cmd = DeleteNode(contato_id)
     apagar_contatos_user_cmd = ApagarContatosUser(contato_id)
     comandos_paralelos = CommandParallel(apagar_cmd, apagar_contatos_user_cmd)
     comandos_paralelos()
-    return RedirectResponse(router.to_path(index))
 
 
 def new():
@@ -57,17 +54,14 @@ def new():
 
 
 @no_csrf
-def editar_form(contato_id):
+def editar_form(_resp, contato_id):
     contato_id = int(contato_id)
     contato = Contato.get_by_id(contato_id)
-    contatoForm = ContatoForm()
-    contatoForm.fill_with_model(contato)
     contexto = {
-        'salvar_path': router.to_path(save),
-        'erros': [],
-        'contato': contatoForm
+        'contato': contato.to_dict()
     }
-    return TemplateResponse(contexto, 'contatos/new.html')
+    return _resp.write(json.dumps(contexto))
+    #TemplateResponse(contexto, 'contatos/new.html')
 
 
 def edit(**propriedades):
@@ -76,13 +70,11 @@ def edit(**propriedades):
     if erros:
         contexto = {'salvar_path': router.to_path(save),
                      'erros': erros
-                     }
+                   }
         #'contato': contato_form
-        return TemplateResponse(contexto, '/contatos/new.html')
     else:
         contato = contato_form.fill_model()
         contato.put()
-        return RedirectResponse(router.to_path(index))
 
 
 class ContatosUser(Arc):
@@ -97,19 +89,26 @@ class ContatoFormTable(ModelForm):
 
 class ContatoForm(ModelForm):
     _model_class = Contato
-    _include = [Contato.nome]
+    _include = [Contato.nome, Contato.email,  Contato.celular, Contato.logradouro]
 
 
-def save(_logged_user,  **propriedades):
-    salvar_contato_com_usuario_cmd = SalvarContatoComUsuario(_logged_user, **propriedades)
-    try:
-        salvar_contato_com_usuario_cmd()
-        return RedirectResponse(router.to_path(index))
-    except CommandExecutionException:
-        contexto = {'salvar_path': router.to_path(save),
-                     'erros': salvar_contato_com_usuario_cmd.errors,
-                     'contato': propriedades}
-        return TemplateResponse(contexto, '/contatos/new.html')
+def save(_logged_user,  _resp, **propriedades):
+    id = propriedades.pop("id", None)
+    if id:
+        contato = Contato.get_by_id(id)
+        contato.populate(**propriedades)
+        contato.put()
+    else:
+        salvar_contato_com_usuario_cmd = SalvarContatoComUsuario(_logged_user, **propriedades)
+        try:
+            contato = salvar_contato_com_usuario_cmd().destination.get()
+        except CommandExecutionException:
+            contexto = {'salvar_path': router.to_path(save),
+                         'erros': salvar_contato_com_usuario_cmd.errors,
+                         'contato': propriedades}
+            _resp.status_code = 500
+            return _resp.write(json.dumps(contexto))
+    return _resp.write(json.dumps(contato.to_dict()))
 
 
 #class BuscarContatosDoUsuario(DestinationsSearch):
