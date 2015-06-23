@@ -1,0 +1,35 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Don't Forget - Contatos
+{% endblock %}
+{% block bodyTitle %}Armazém de arquivos{% endblock %}
+{% block bodyDescription %}Adicione arquivos gratuitamente clicando <a href="upload/form">aqui</a>{% endblock %}
+{% block body %}
+    <!-- Two -->
+    <section id="two">
+        <div class="row">
+
+            <table>
+                <thead>
+                    <tr>
+                        <td>Download</td>
+                        <td>Descrição</td>
+                        <td>Deletar</td>
+                    </tr>
+                </thead>
+                {% for arq in arquivos %}
+                    <tr>
+                        <td><a class="icon fa-download" href="{{ arq.download_path }}"></a></td>
+                        <td>{{ arq.filename }}</td>
+                        <td>
+                            <form action="{{ arq.delete_path }}" method="post">
+                                {{ csrf_input() }}
+                                <button>Apagar</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </section>
+{% endblock %}

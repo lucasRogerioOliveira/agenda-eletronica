@@ -1,0 +1,18 @@
+{% extends 'base/base.html' %}
+{% block title %}
+    Don't Forget - Contatos
+{% endblock %}
+{% block bodyTitle %}Armazém de arquivos{% endblock %}
+{% block bodyDescription %}Adicione arquivos gratuitamente abaixo.{% endblock %}
+{% block body %}
+    <!-- Two -->
+    <section id="two">
+        <div class="row">
+            <form action="{{ salvar_path }}" method="post" enctype="multipart/form-data">
+                {{ csrf_input() }}
+                <input type="file" name="files" multiple="multiple"/>
+                <button class="button fa-save " type="submit">Salvar</button>
+            </form>
+        </div>
+    </section>
+{% endblock %}
